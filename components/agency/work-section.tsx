@@ -1,32 +1,7 @@
 import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
-
-const projects = [
-  {
-    name: 'Everyday heat',
-    discipline: 'Product identity · Packaging · Campaign',
-    image: '/images/work-sunday.png',
-    alt: 'Chili crisp jars and red peppers on a butter-yellow set',
-    className: 'work-card--featured',
-    note: 'Food & drink / studio concept.',
-  },
-  {
-    name: 'Soft ritual',
-    discipline: 'Digital branding · Art direction · Social',
-    image: '/images/work-forme.png',
-    alt: 'Minimal cream and cobalt skincare bottles with green pear and leaves',
-    className: 'work-card--aside',
-    note: 'Beauty / brand world study.',
-  },
-  {
-    name: 'Main character',
-    discipline: 'Fashion campaign · Social production',
-    image: '/images/work-play.png',
-    alt: 'Fashion campaign portrait against a vivid lime and coral set',
-    className: 'work-card--wide',
-    note: 'Style / campaign concept.',
-  },
-]
+import { TransitionLink } from '@/components/agency/navigation-transitions'
+import { projects } from '@/components/agency/project-data'
 
 export function WorkSection() {
   return (
@@ -47,10 +22,16 @@ export function WorkSection() {
 
       <div className="work-grid">
         {projects.map((project, index) => (
-          <article className={`work-card ${project.className} reveal`} key={project.name}>
-            <a className="work-card__media" href="#contact" aria-label={`Talk with us about work like ${project.name}`}>
+          <article className={`work-card ${project.className} reveal`} key={project.slug}>
+            <TransitionLink
+              className="work-card__media"
+              href={`/work/${project.slug}`}
+              sharedElementId={project.slug}
+              data-flip-id={project.slug}
+              aria-label={`View the ${project.name} case study`}
+            >
               <Image
-                alt={project.alt}
+                alt={project.imageAlt}
                 className="work-card__image"
                 fill
                 sizes={project.className === 'work-card--wide' ? '(max-width: 760px) 100vw, 64vw' : '(max-width: 760px) 100vw, 52vw'}
@@ -58,7 +39,7 @@ export function WorkSection() {
               />
               <span className="work-card__index">0{index + 1} / 03</span>
               <span className="work-card__arrow" aria-hidden="true"><ArrowUpRight /></span>
-            </a>
+            </TransitionLink>
             <div className="work-card__caption">
               <div>
                 <h3>{project.name}</h3>
@@ -70,7 +51,7 @@ export function WorkSection() {
         ))}
       </div>
       <p className="work-footnote reveal">
-        Concept work, made in-house. Every identity is shaped around the business it belongs to.
+        Concept work, made in-house. Each case study shows the strategy, creative process, and a social-first content direction.
       </p>
     </section>
   )

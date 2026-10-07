@@ -2,6 +2,7 @@
 
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import { RouteAwareLink, TransitionLink } from '@/components/agency/navigation-transitions'
 
 const navigation = [
   { label: 'Studio', href: '#about' },
@@ -20,21 +21,21 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="site-header__inner page-container">
-        <a className="wordmark" href="#top" aria-label="Jo Visuals home" onClick={closeMenu}>
+        <RouteAwareLink className="wordmark" href="#top" aria-label="Jo Visuals home" onClick={closeMenu}>
           <span className="wordmark__mark" aria-hidden="true">j</span>
           <span>jo visuals<span className="wordmark__period">.</span></span>
           <span className="wordmark__descriptor">BRANDING · ADS · DIGITAL</span>
-        </a>
+        </RouteAwareLink>
 
         <nav className="desktop-nav" aria-label="Main navigation">
           {navigation.map((item) => (
-            <a className="nav-link" href={item.href} key={item.href}>
+            <RouteAwareLink className="nav-link" href={item.href} key={item.href}>
               {item.label}
-            </a>
+            </RouteAwareLink>
           ))}
-          <a className="nav-cta" href="#contact">
+          <TransitionLink className="nav-cta" href="/contact">
             Let&apos;s talk <ArrowUpRight aria-hidden="true" />
-          </a>
+          </TransitionLink>
         </nav>
 
         <button
@@ -56,13 +57,13 @@ export function SiteHeader() {
         hidden={!menuOpen}
       >
         {navigation.map((item) => (
-          <a href={item.href} key={item.href} onClick={closeMenu}>
+          <RouteAwareLink href={item.href} key={item.href} onClick={closeMenu}>
             {item.label}
-          </a>
+          </RouteAwareLink>
         ))}
-        <a className="mobile-nav__cta" href="#contact" onClick={closeMenu}>
+        <TransitionLink className="mobile-nav__cta" href="/contact" onClick={closeMenu}>
           Start a project <ArrowUpRight aria-hidden="true" />
-        </a>
+        </TransitionLink>
       </nav>
     </header>
   )

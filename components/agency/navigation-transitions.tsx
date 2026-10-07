@@ -15,21 +15,27 @@ import {
   type ReactNode,
 } from 'react'
 import { gsap } from 'gsap'
+import { Flip } from 'gsap/Flip'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+
+type FlipSnapshot = ReturnType<typeof Flip.getState>
 
 type PendingNavigation = {
   pathname: string
   hash: string
-  complete: () => void
+  sharedElementId?: string
+  flipState?: FlipSnapshot
 }
 
-type DocumentWithViewTransitions = Document & {
-  startViewTransition?: (update: () => void | Promise<void>) => { finished: Promise<void> }
-}
-
-type NavigationContextValue = (href: string) => void
+type NavigationContextValue = (href: string, sharedElementId?: string) => void
 
 const NavigationTransitionContext = createContext<NavigationContextValue | null>(null)
+
+function findSharedElement(id: string) {
+  return Array.from(document.querySelectorAll<HTMLElement>('[data-flip-id]')).find(
+    (element) => element.dataset.flipId === id,
+  )
+}
 
 type ProviderProps = {
   children: ReactNode
@@ -39,101 +45,122 @@ export function NavigationTransitionProvider({ children }: ProviderProps) {
   const router = useRouter()
   const pathname = usePathname()
   const pendingNavigation = useRef<PendingNavigation | null>(null)
+  const previousPathname = useRef(pathname)
 
   useLayoutEffect(() => {
-    const pending = pendingNavigation.current
-    if (!pending || pending.pathname !== pathname) return
+    const pathnameChanged = previousPathname.current !== pathname
+    previousPathname.current = pathname
+    if (!pathnameChanged) return
 
-    const frame = window.requestAnimationFrame(() => {
-      if (!pending.hash) {
-        pending.complete()
-        return
+    gsap.registerPlugin(Flip, ScrollToPlugin)
+
+    const pending = pendingNavigation.current?.pathname === pathname ? pendingNavigation.current : null
+    pendingNavigation.current = null
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let entryStarted = false
+
+    const animatePageEntry = () => {
+      if (entryStarted) return
+      entryStarted = true
+      if (reduceMotion) return
+
+      const routeItems = gsap.utils.toArray<HTMLElement>('[data-route-enter] [data-route-item]')
+      if (routeItems.length) {
+        gsap.fromTo(
+          routeItems,
+          { autoAlpha: 0, y: 18 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.62,
+            stagger: 0.055,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform,visibility',
+          },
+        )
       }
 
-      const targetId = decodeURIComponent(pending.hash.slice(1))
-      const target = document.getElementById(targetId)
-
-      if (!target) {
-        pending.complete()
-        return
+      if (pending?.sharedElementId && pending.flipState) {
+        const target = findSharedElement(pending.sharedElementId)
+        if (target) {
+          Flip.from(pending.flipState, {
+            targets: target,
+            duration: 0.92,
+            ease: 'power4.inOut',
+            absolute: true,
+            fade: true,
+            scale: true,
+            onComplete: () => gsap.set(target, { clearProps: 'transform,opacity,visibility' }),
+          })
+        }
       }
+    }
 
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        target.scrollIntoView({ behavior: 'auto', block: 'start' })
-        pending.complete()
-        return
-      }
+    if (pending?.hash) {
+      const frame = window.requestAnimationFrame(() => {
+        let targetId = pending.hash.slice(1)
+        try {
+          targetId = decodeURIComponent(targetId)
+        } catch {
+          targetId = pending.hash.slice(1)
+        }
 
-      gsap.registerPlugin(ScrollToPlugin)
-      const headerOffset = document.querySelector<HTMLElement>('.site-header')?.offsetHeight ?? 0
-      gsap.to(window, {
-        duration: 0.86,
-        ease: 'power3.inOut',
-        overwrite: 'auto',
-        scrollTo: { y: target, offsetY: headerOffset + 12, autoKill: true },
-        onComplete: pending.complete,
-        onInterrupt: pending.complete,
+        const target = document.getElementById(targetId)
+        if (!target) {
+          animatePageEntry()
+          return
+        }
+
+        if (reduceMotion) {
+          target.scrollIntoView({ behavior: 'auto', block: 'start' })
+          animatePageEntry()
+          return
+        }
+
+        const headerOffset = document.querySelector<HTMLElement>('.site-header')?.offsetHeight ?? 0
+        gsap.killTweensOf(window)
+        gsap.to(window, {
+          duration: 0.88,
+          ease: 'power3.inOut',
+          overwrite: 'auto',
+          scrollTo: { y: target, offsetY: headerOffset + 12, autoKill: true },
+          onComplete: animatePageEntry,
+          onInterrupt: animatePageEntry,
+        })
       })
-    })
 
+      return () => window.cancelAnimationFrame(frame)
+    }
+
+    if (pending && !pending.hash) window.scrollTo(0, 0)
+
+    const frame = window.requestAnimationFrame(animatePageEntry)
     return () => window.cancelAnimationFrame(frame)
   }, [pathname])
 
   const navigate = useCallback(
-    (href: string) => {
+    (href: string, sharedElementId?: string) => {
       const destination = new URL(href, window.location.href)
 
       if (destination.origin !== window.location.origin) {
-        window.location.assign(href)
+        window.location.assign(destination.href)
         return
       }
 
-      pendingNavigation.current?.complete()
-
-      let resolveNavigation = () => {}
-      let timeoutId = 0
-      let isComplete = false
-      const routeReady = new Promise<void>((resolve) => {
-        resolveNavigation = resolve
-      })
-
-      const complete = () => {
-        if (isComplete) return
-        isComplete = true
-        window.clearTimeout(timeoutId)
-        if (pendingNavigation.current?.complete === complete) pendingNavigation.current = null
-        resolveNavigation()
-      }
+      gsap.registerPlugin(Flip, ScrollToPlugin)
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      const source = sharedElementId && !reduceMotion ? findSharedElement(sharedElementId) : undefined
+      const flipState = source ? Flip.getState(source) : undefined
+      const destinationHref = `${destination.pathname}${destination.search}${destination.hash}`
 
       pendingNavigation.current = {
         pathname: destination.pathname,
         hash: destination.hash,
-        complete,
-      }
-      timeoutId = window.setTimeout(complete, 3200)
-
-      const destinationHref = `${destination.pathname}${destination.search}${destination.hash}`
-      const push = () => startTransition(() => router.push(destinationHref, { scroll: false }))
-      const transitionDocument = document as DocumentWithViewTransitions
-      const startViewTransition = transitionDocument.startViewTransition?.bind(document)
-
-      if (
-        !startViewTransition ||
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      ) {
-        push()
-        return
+        sharedElementId,
+        flipState,
       }
 
-      try {
-        const transition = startViewTransition(async () => {
-          push()
-          await routeReady
-        })
-        void transition.finished.catch(() => undefined)
-      } catch {
-        push()
-      }
+      startTransition(() => router.push(destinationHref, { scroll: false }))
     },
     [router],
   )
@@ -148,9 +175,17 @@ export function NavigationTransitionProvider({ children }: ProviderProps) {
 type TransitionLinkProps = Omit<ComponentProps<typeof Link>, 'href' | 'onClick'> & {
   href: string
   onClick?: MouseEventHandler<HTMLAnchorElement>
+  sharedElementId?: string
 }
 
-export function TransitionLink({ href, onClick, target, download, ...props }: TransitionLinkProps) {
+export function TransitionLink({
+  href,
+  onClick,
+  target,
+  download,
+  sharedElementId,
+  ...props
+}: TransitionLinkProps) {
   const pathname = usePathname()
   const navigate = useContext(NavigationTransitionContext)
 
@@ -175,7 +210,7 @@ export function TransitionLink({ href, onClick, target, download, ...props }: Tr
     if (destination.origin !== window.location.origin || destination.pathname === pathname) return
 
     event.preventDefault()
-    navigate(`${destination.pathname}${destination.search}${destination.hash}`)
+    navigate(`${destination.pathname}${destination.search}${destination.hash}`, sharedElementId)
   }
 
   return <Link href={href} target={target} download={download} {...props} onClick={handleClick} />
@@ -184,6 +219,7 @@ export function TransitionLink({ href, onClick, target, download, ...props }: Tr
 export function RouteAwareLink({
   href,
   children,
+  sharedElementId,
   ...props
 }: Omit<TransitionLinkProps, 'href'> & { href: string; children: ReactNode }) {
   const pathname = usePathname()
@@ -198,17 +234,21 @@ export function RouteAwareLink({
   }
 
   return (
-    <TransitionLink href={destination} {...props}>
+    <TransitionLink href={destination} sharedElementId={sharedElementId} {...props}>
       {children}
     </TransitionLink>
   )
 }
 
-export type TransitionLinkNativeProps = Omit<TransitionLinkProps, 'href'>
+export type TransitionLinkNativeProps = Omit<TransitionLinkProps, 'href' | 'sharedElementId'>
 
-export function HomeAnchor({ href, children, ...props }: TransitionLinkNativeProps & { href: string; children: ReactNode }) {
+export function HomeAnchor({
+  href,
+  children,
+  ...props
+}: TransitionLinkNativeProps & { href: string; children: ReactNode }) {
   const pathname = usePathname()
-  const destination = pathname === '/' ? href : `/${href.replace(/^\\//, '')}`
+  const destination = pathname === '/' ? href : href.startsWith('#') ? `/${href}` : href
 
   if (destination.startsWith('#')) {
     return (

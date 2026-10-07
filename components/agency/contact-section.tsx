@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
+import { RouteAwareLink, TransitionLink } from '@/components/agency/navigation-transitions'
 
 const contactEmail = 'hello@jovisuals.com'
 
@@ -22,12 +23,9 @@ export function ContactSection() {
             Starting a business, reshaping a brand, or ready to make more of your social presence?
             Tell us what you&apos;re building.
           </p>
-          <a
-            className="contact-button"
-            href={`mailto:${contactEmail}?subject=Project%20enquiry%20for%20Jo%20Visuals`}
-          >
+          <TransitionLink className="contact-button" href="/contact">
             Start a conversation <ArrowUpRight aria-hidden="true" />
-          </a>
+          </TransitionLink>
         </div>
       </div>
     </section>
@@ -38,9 +36,9 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="page-container site-footer__top">
-        <a className="footer-wordmark" href="#top" aria-label="Jo Visuals, back to top">
+        <RouteAwareLink className="footer-wordmark" href="#top" aria-label="Jo Visuals, back to top">
           jo visuals<span>.</span>
-        </a>
+        </RouteAwareLink>
         <p>Branding. Advertising.<br />Digital production.</p>
         <a className="footer-email" href={`mailto:${contactEmail}`}>
           {contactEmail} <ArrowUpRight aria-hidden="true" />
@@ -49,7 +47,7 @@ export function SiteFooter() {
       <div className="page-container site-footer__bottom">
         <span>© 2026 Jo Visuals</span>
         <span>Strategy at heart. Visuals with feeling.</span>
-        <a href="#top">Back to the top ↑</a>
+        <RouteAwareLink href="#top">Back to the top ↑</RouteAwareLink>
       </div>
     </footer>
   )

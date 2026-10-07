@@ -125,7 +125,7 @@ export function ScrollReveal() {
 
       const hash = link.getAttribute('href')
       const target = hash ? document.getElementById(hash.slice(1)) : null
-      if (!hash || hash === '#' || !target) return
+        if (!hash || hash === '#' || !target) return
 
       event.preventDefault()
       if (window.location.hash !== hash) window.history.pushState(null, '', hash)
