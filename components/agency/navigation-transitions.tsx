@@ -222,16 +222,7 @@ export function RouteAwareLink({
   sharedElementId,
   ...props
 }: Omit<TransitionLinkProps, 'href'> & { href: string; children: ReactNode }) {
-  const pathname = usePathname()
-  const destination = href.startsWith('#') && pathname !== '/' ? `/${href}` : href
-
-  if (destination.startsWith('#')) {
-    return (
-      <a href={destination} {...props}>
-        {children}
-      </a>
-    )
-  }
+  const destination = href.startsWith('#') ? `/${href}` : href
 
   return (
     <TransitionLink href={destination} sharedElementId={sharedElementId} {...props}>
@@ -247,16 +238,7 @@ export function HomeAnchor({
   children,
   ...props
 }: TransitionLinkNativeProps & { href: string; children: ReactNode }) {
-  const pathname = usePathname()
-  const destination = pathname === '/' ? href : href.startsWith('#') ? `/${href}` : href
-
-  if (destination.startsWith('#')) {
-    return (
-      <a href={destination} {...props}>
-        {children}
-      </a>
-    )
-  }
+  const destination = href.startsWith('#') ? `/${href}` : href
 
   return (
     <TransitionLink href={destination} {...props}>
