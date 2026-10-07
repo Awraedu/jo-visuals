@@ -1,5 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
 
+const contactEmail = 'hello@jovisuals.com'
+
 export function ContactSection() {
   return (
     <section className="contact-section" id="contact" aria-labelledby="contact-title">
@@ -7,21 +9,24 @@ export function ContactSection() {
         <div className="contact-top reveal">
           <p className="eyebrow eyebrow--light">
             <span className="availability-dot" aria-hidden="true" />
-            A few good things start here
+            Full service. Fully considered.
           </p>
-          <span className="contact-note">Taking on select projects for 2026</span>
+          <span className="contact-note">Branding · advertising · digital production</span>
         </div>
         <h2 className="contact-title reveal" id="contact-title">
-          Let&apos;s make<br />
-          something <em>matter.</em>
+          Make your<br />
+          next move <em>matter.</em>
         </h2>
         <div className="contact-bottom reveal">
-          <p>Have a big idea, a brand that&apos;s ready for more, or a feed that needs a little feeling?</p>
+          <p>
+            Starting a business, reshaping a brand, or ready to make more of your social presence?
+            Tell us what you&apos;re building.
+          </p>
           <a
             className="contact-button"
-            href="mailto:hello@goodform.studio?subject=Let%27s%20make%20something%20matter"
+            href={`mailto:${contactEmail}?subject=Project%20enquiry%20for%20Jo%20Visuals`}
           >
-            Tell us what you&apos;re building <ArrowUpRight aria-hidden="true" />
+            Start a conversation <ArrowUpRight aria-hidden="true" />
           </a>
         </div>
       </div>
@@ -33,17 +38,17 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="page-container site-footer__top">
-        <a className="footer-wordmark" href="#top" aria-label="Goodform Studio, back to top">
-          goodform<span>.</span>
+        <a className="footer-wordmark" href="#top" aria-label="Jo Visuals, back to top">
+          jo visuals<span>.</span>
         </a>
-        <p>Full-spectrum branding.<br />Social with a point of view.</p>
-        <a className="footer-email" href="mailto:hello@goodform.studio">
-          hello@goodform.studio <ArrowUpRight aria-hidden="true" />
+        <p>Branding. Advertising.<br />Digital production.</p>
+        <a className="footer-email" href={`mailto:${contactEmail}`}>
+          {contactEmail} <ArrowUpRight aria-hidden="true" />
         </a>
       </div>
       <div className="page-container site-footer__bottom">
-        <span>© 2026 Goodform Studio</span>
-        <span>Independent by nature. Everywhere by design.</span>
+        <span>© 2026 Jo Visuals</span>
+        <span>Strategy at heart. Visuals with feeling.</span>
         <a href="#top">Back to the top ↑</a>
       </div>
     </footer>

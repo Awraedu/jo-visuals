@@ -1,5 +1,7 @@
+import { BrandStorySection } from '@/components/agency/brand-story-section'
 import { ContactSection, SiteFooter } from '@/components/agency/contact-section'
 import { HeroSection } from '@/components/agency/hero-section'
+import { InvestmentSection } from '@/components/agency/investment-section'
 import { ProcessSection } from '@/components/agency/process-section'
 import { ScrollReveal } from '@/components/agency/scroll-reveal'
 import { ServicesSection } from '@/components/agency/services-section'
@@ -7,7 +9,7 @@ import { SiteHeader } from '@/components/agency/site-header'
 import { WorkSection } from '@/components/agency/work-section'
 
 function StudioTicker() {
-  const phrases = ['Strategy', 'Identity', 'Social', 'Good ideas, out in the world']
+  const phrases = ['Branding', 'Advertising', 'Digital production', 'Built to move brands forward']
 
   return (
     <div className="studio-ticker" aria-hidden="true">
@@ -38,8 +40,10 @@ export function AgencyLanding() {
       <main id="main-content">
         <HeroSection />
         <StudioTicker />
+        <BrandStorySection />
         <WorkSection />
         <ServicesSection />
+        <InvestmentSection />
         <ProcessSection />
         <ContactSection />
       </main>

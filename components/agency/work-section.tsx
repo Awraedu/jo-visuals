@@ -3,28 +3,28 @@ import { ArrowUpRight } from 'lucide-react'
 
 const projects = [
   {
-    name: 'Sunday Pantry',
-    discipline: 'Brand strategy · Identity · Launch',
+    name: 'Everyday heat',
+    discipline: 'Product identity · Packaging · Campaign',
     image: '/images/work-sunday.png',
     alt: 'Chili crisp jars and red peppers on a butter-yellow set',
     className: 'work-card--featured',
-    note: 'A little heat for the everyday.',
+    note: 'Food & drink / studio concept.',
   },
   {
-    name: 'Forme Botanics',
-    discipline: 'Brand world · Content · Social',
+    name: 'Soft ritual',
+    discipline: 'Digital branding · Art direction · Social',
     image: '/images/work-forme.png',
     alt: 'Minimal cream and cobalt skincare bottles with green pear and leaves',
     className: 'work-card--aside',
-    note: 'A softer kind of skincare.',
+    note: 'Beauty / brand world study.',
   },
   {
-    name: 'Good Day Club',
-    discipline: 'Campaign · Social strategy · Growth',
+    name: 'Main character',
+    discipline: 'Fashion campaign · Social production',
     image: '/images/work-play.png',
     alt: 'Fashion campaign portrait against a vivid lime and coral set',
     className: 'work-card--wide',
-    note: 'Making everyday feel like the main event.',
+    note: 'Style / campaign concept.',
   },
 ]
 
@@ -33,14 +33,15 @@ export function WorkSection() {
     <section className="work-section section-padding page-container" id="work" aria-labelledby="work-title">
       <div className="section-intro reveal">
         <div>
-          <p className="eyebrow">The good stuff</p>
+          <p className="eyebrow">A visual playground</p>
           <h2 className="section-title" id="work-title">
-            A few good ideas,<br />
-            <em>out in the world.</em>
+            A few brand worlds,<br />
+            <em>taking shape.</em>
           </h2>
         </div>
         <p className="section-intro__aside">
-          Thoughtful from the first sketch. Distinctive everywhere it lands.
+          Studio-made concept studies showing how identity, art direction, and digital production can
+          work together.
         </p>
       </div>
 
@@ -68,7 +69,9 @@ export function WorkSection() {
           </article>
         ))}
       </div>
-      <p className="work-footnote reveal">Small teams. Big ideas. Built to show up everywhere.</p>
+      <p className="work-footnote reveal">
+        Concept work, made in-house. Every identity is shaped around the business it belongs to.
+      </p>
     </section>
   )
 }

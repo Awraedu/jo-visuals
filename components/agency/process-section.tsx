@@ -1,23 +1,23 @@
 const steps = [
   {
     number: '01',
-    title: 'Get curious',
-    copy: 'We listen closely, ask better questions, and find the opportunity worth chasing.',
+    title: 'Discovery',
+    copy: 'Research your brand position, audience, and the goals behind the work.',
   },
   {
     number: '02',
-    title: 'Find your thing',
-    copy: 'We shape a clear strategy and a point of view that feels unmistakably yours.',
+    title: 'Concept',
+    copy: 'Explore moodboards, visual frameworks, and clear creative directions.',
   },
   {
     number: '03',
-    title: 'Make it real',
-    copy: 'We turn the big idea into a full identity, a content world, and a launch with feeling.',
+    title: 'Production',
+    copy: 'Craft the assets, motion, edits, color, and sound with care.',
   },
   {
     number: '04',
-    title: 'Keep it growing',
-    copy: 'We show up, learn from the response, and keep making the work work harder.',
+    title: 'Delivery',
+    copy: 'Receive finished work prepared for web, social, print, and broadcast.',
   },
 ]
 
@@ -26,12 +26,12 @@ export function ProcessSection() {
     <section className="process-section section-padding" id="approach" aria-labelledby="process-title">
       <div className="page-container">
         <div className="process-heading reveal">
-          <p className="eyebrow">Good work, good people</p>
+          <p className="eyebrow">From brief to final frame</p>
           <h2 className="section-title" id="process-title">
-            Big thinking.<br />
-            <em>Good doing.</em>
+            Thoughtful work.<br />
+            <em>Good process.</em>
           </h2>
-          <p>Clear heads, open minds, and a little bit of get-up-and-go.</p>
+          <p>A clear path from the first question to delivery, with strategy and craft connected all the way through.</p>
         </div>
         <ol className="process-grid">
           {steps.map((step) => (

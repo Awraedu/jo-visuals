@@ -8,28 +8,28 @@ export function HeroSection() {
         <div className="hero-copy">
           <p className="eyebrow hero-eyebrow reveal">
             <span className="availability-dot" aria-hidden="true" />
-            Independent brand + social studio
+            Branding · advertising · digital production
           </p>
           <h1 className="hero-title reveal" id="hero-title">
-            We make<br />
-            brands <em>matter.</em>
+            Make your<br />
+            brand <em>matter.</em>
           </h1>
           <p className="hero-description reveal">
-            The big-picture brand thinking and scroll-stopping social to make your next chapter
-            impossible to ignore.
+            We connect creative storytelling with strategic marketing—building distinctive identities,
+            campaign-ready advertising, and digital content that helps your business grow.
           </p>
           <div className="hero-actions reveal">
             <a className="button button--dark" href="#work">
-              See what we make <ArrowDown aria-hidden="true" />
+              Explore the work <ArrowDown aria-hidden="true" />
             </a>
             <a className="simple-link" href="#contact">
-              Have a good idea? <span>Let&apos;s talk.</span>
+              Building something? <span>Let&apos;s talk.</span>
             </a>
           </div>
           <div className="hero-footnote reveal">
-            <span>From first thought</span>
+            <span>From first strategy</span>
             <span className="hero-footnote__line" aria-hidden="true" />
-            <span>to the whole feed</span>
+            <span>to the final frame</span>
           </div>
         </div>
 
@@ -44,17 +44,17 @@ export function HeroSection() {
               src="/images/hero-campaign.png"
             />
             <div className="hero-image-note">
-              <span>Good things</span>
-              <span>are in motion <ArrowUpRight aria-hidden="true" /></span>
+              <span>Ideas, made visible</span>
+              <span>Built to move <ArrowUpRight aria-hidden="true" /></span>
             </div>
             <div className="hero-stamp" aria-hidden="true">
               <span>MADE TO</span>
-              <strong>matter</strong>
-              <span>✳ GOODFORM ✳</span>
+              <strong>move</strong>
+              <span>✳ JO VISUALS ✳</span>
             </div>
           </div>
           <div className="hero-caption">
-            <span>Creative direction / 2026</span>
+            <span>Brand systems / campaign production</span>
             <span>01 — 03</span>
           </div>
         </div>

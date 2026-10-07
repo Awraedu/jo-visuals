@@ -4,9 +4,10 @@ import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
 const navigation = [
+  { label: 'Studio', href: '#about' },
   { label: 'Work', href: '#work' },
-  { label: 'What we do', href: '#services' },
-  { label: 'Our approach', href: '#approach' },
+  { label: 'Services', href: '#services' },
+  { label: 'Investment', href: '#investment' },
 ]
 
 export function SiteHeader() {
@@ -19,10 +20,10 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="site-header__inner page-container">
-        <a className="wordmark" href="#top" aria-label="Goodform Studio home" onClick={closeMenu}>
-          <span className="wordmark__mark" aria-hidden="true">g</span>
-          <span>goodform<span className="wordmark__period">.</span></span>
-          <span className="wordmark__descriptor">BRAND + SOCIAL STUDIO</span>
+        <a className="wordmark" href="#top" aria-label="Jo Visuals home" onClick={closeMenu}>
+          <span className="wordmark__mark" aria-hidden="true">j</span>
+          <span>jo visuals<span className="wordmark__period">.</span></span>
+          <span className="wordmark__descriptor">BRANDING · ADS · DIGITAL</span>
         </a>
 
         <nav className="desktop-nav" aria-label="Main navigation">

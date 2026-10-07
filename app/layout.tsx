@@ -3,14 +3,15 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Goodform Studio — Brand & Social, Built to Matter',
+  title: 'Jo Visuals — Branding, Advertising & Digital Production',
   description:
-    'Goodform is an independent brand and social studio building distinctive identities, thoughtful content, and marketing that moves people.',
+    'Jo Visuals is a full-service creative agency connecting brand identity, advertising, social media, and digital production through strategic storytelling.',
+  applicationName: 'Jo Visuals',
   generator: 'Next.js',
   openGraph: {
-    title: 'Goodform Studio — Brand & Social, Built to Matter',
+    title: 'Jo Visuals — Branding, Advertising & Digital Production',
     description:
-      'Full-spectrum branding and social with a point of view. Make your next chapter impossible to ignore.',
+      'Branding, advertising, and digital production for businesses ready to show up with clarity, character, and consistency.',
     type: 'website',
   },
   icons: {

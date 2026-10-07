@@ -3,27 +3,48 @@ import { ArrowUpRight, Plus } from 'lucide-react'
 const services = [
   {
     number: '01',
-    title: 'Brand strategy',
-    summary: 'Find the thing that makes you, unmistakably you.',
+    title: 'Branding & visual identity',
+    summary: 'Build a clear, recognizable system that works everywhere.',
     description:
-      'We get curious about your people, your category, and the opportunity hiding in plain sight—then turn it into a clear point of view your whole team can use.',
-    deliverables: ['Positioning & purpose', 'Audience & insight', 'Naming & messaging', 'Brand architecture'],
+      'We shape the strategy and visual language behind your business, then make it practical to use—from the first brand guide to the smallest social profile. The work can serve a company, product, person, service, place, employer, or digital platform.',
+    deliverables: [
+      'Corporate & employer branding',
+      'Product identity & packaging',
+      'Personal & service branding',
+      'Retail & place branding',
+      'Digital identity systems',
+      'Brand guidelines & rollout',
+    ],
   },
   {
     number: '02',
-    title: 'Visual identity',
-    summary: 'Build a world people want to step into.',
+    title: 'Advertising & print',
+    summary: 'Carry one strong idea across every customer touchpoint.',
     description:
-      'A flexible identity with enough character to stand out and enough smarts to work everywhere—from the tiny avatar to the big, beautiful launch.',
-    deliverables: ['Logo & visual system', 'Color & typography', 'Art direction', 'Guidelines & rollout'],
+      'We design campaign-ready advertising and print pieces with the same care as the brand itself—thoughtful in concept, consistent in execution, and prepared for where they will appear.',
+    deliverables: [
+      'Business cards & stationery',
+      'Flyers & brochures',
+      'Company profile decks',
+      'Banners & signage',
+      'Digital advertising creative',
+      'Print-ready artwork',
+    ],
   },
   {
     number: '03',
-    title: 'Social & growth',
-    summary: 'Turn the brand into a reason to stop scrolling.',
+    title: 'Social media & production',
+    summary: 'Create content people want to watch, share, and remember.',
     description:
-      'We make social feel like you, not everybody else: platform-native content, a thoughtful publishing rhythm, and marketing built to move the right numbers.',
-    deliverables: ['Social strategy & calendars', 'Content production', 'Community & publishing', 'Paid campaigns & reporting'],
+      'From social strategy and day-to-day management to polished short-form video, we make platform-native work that feels like your brand. Add motion graphics, kinetic type, and campaign production when the story calls for more.',
+    deliverables: [
+      'Social media management',
+      'Content strategy & calendars',
+      'Photo & video content creation',
+      'Short-form video editing',
+      'Motion graphics & kinetic type',
+      'Campaigns, publishing & reporting',
+    ],
   },
 ]
 
@@ -34,15 +55,15 @@ export function ServicesSection() {
         <div className="services-intro reveal">
           <p className="eyebrow eyebrow--light">What we do</p>
           <h2 className="section-title" id="services-title">
-            One team.<br />
-            The <em>whole</em><br />
-            picture.
+            One clear story.<br />
+            Every <em>touchpoint.</em>
           </h2>
           <p className="services-intro__copy">
-            From the first big question to your next best-performing post, we connect every piece.
+            Brand systems, advertising, and social production—connected by one thoughtful creative
+            direction.
           </p>
-          <a className="services-link" href="#contact">
-            See how we can help <ArrowUpRight aria-hidden="true" />
+          <a className="services-link" href="#investment">
+            Explore packages &amp; pricing <ArrowUpRight aria-hidden="true" />
           </a>
         </div>
 
