@@ -6,6 +6,7 @@ import { ProcessSection } from '@/components/agency/process-section'
 import { ScrollReveal } from '@/components/agency/scroll-reveal'
 import { ServicesSection } from '@/components/agency/services-section'
 import { SiteHeader } from '@/components/agency/site-header'
+import { TeamSection } from '@/components/agency/team-section'
 import { WorkSection } from '@/components/agency/work-section'
 
 function StudioTicker() {
@@ -45,6 +46,7 @@ export function AgencyLanding() {
         <ServicesSection />
         <InvestmentSection />
         <ProcessSection />
+        <TeamSection />
         <ContactSection />
       </main>
       <SiteFooter />
